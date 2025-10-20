@@ -1,14 +1,13 @@
+# Stage 1: Build JAR
+FROM maven:3.9.2-eclipse-temurin-21 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-
-FROM openjdk:21
-
-# Copy the JAR file to the correct directory
-COPY target/ResumeSystem_docker_app.jar /usr/app/
-
-# Set the working directory
+# Stage 2: Run the app
+FROM eclipse-temurin:21
 WORKDIR /usr/app
-# Expose port
+COPY --from=build /app/target/*.jar ./app.jar
 EXPOSE 9090
-
-# Run the application
-ENTRYPOINT ["java", "-jar", "ResumeSystem_docker_app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
