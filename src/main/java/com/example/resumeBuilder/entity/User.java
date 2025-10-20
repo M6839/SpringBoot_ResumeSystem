@@ -2,12 +2,13 @@ package com.example.resumeBuilder.entity;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name="app_user")
 public class User {
 
     @Id
